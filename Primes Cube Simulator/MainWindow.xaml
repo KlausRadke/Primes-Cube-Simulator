@@ -1,0 +1,249 @@
+﻿<Window x:Class="Primes_Cube_Simulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        DataContext="MainWindow.Message"
+        Title="Primes Cube Simulation" Height="650" Width="1400">
+
+    <Grid Name="Gd">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+
+        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" BorderBrush="DarkGreen"
+                BorderThickness="2" CornerRadius="5" />
+        <Button Grid.Row="0" Grid.Column="1" Click="ButtonUSB_OnClick" Content="USB Connection"
+                HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="42" Margin="5,5,5,5" />
+        <Button Grid.Row="0" Grid.Column="2" Click="ButtonBluetooth_OnClick" Content="Bluetooth Connection"
+                HorizontalAlignment="Right" VerticalAlignment="Center" Width="142" Height="42" Margin="5,5,5,5" />
+        <Button Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Click="DisconnectCube_OnClick"
+                Content="Disconnect Cube" Width="142" Height="42" Margin="5,5,5,5" />
+
+        <Border Grid.Column="3" Grid.ColumnSpan="4" Grid.RowSpan="2" BorderBrush="DarkGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Button Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Click="StartMeasurement_OnClick"
+                Content="Start Measurement" HorizontalAlignment="Center" VerticalAlignment="Center" Width="140"
+                Height="40" Margin="5,5,5,5" />
+        <Button Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Click="StopMeasurement_OnClick"
+                Content="Stop Measurement" HorizontalAlignment="Center" VerticalAlignment="Center" Width="140"
+                Height="40" Margin="5,5,5,5" />
+        <ProgressBar Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="4" Height="42" Margin="5,5,5,5" Minimum="0"
+                     Maximum="72" Value="{Binding Path=MeasureTime}" />
+
+        <Border Grid.Column="7" Grid.ColumnSpan="2" Grid.RowSpan="2" BorderBrush="DarkGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <ListBox Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Grid.ColumnSpan="2" Name="DList"
+                 ItemsSource="{Binding }" IsSynchronizedWithCurrentItem="True" SelectionMode="Single"
+                 SelectionChanged="DList_OnSelectionChanged" Margin="5,5,5,5" />
+
+        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="8" Grid.RowSpan="2" CornerRadius="5"
+                BorderBrush="LimeGreen" BorderThickness="4" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Name="ConnectInfo" Grid.ColumnSpan="7" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Text="{Binding }" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Name="FindDevices" Grid.ColumnSpan="7" VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center" Text="{Binding }" />
+        <TextBlock Grid.Row="3" Grid.Column="1" Name="MeasurementInfo" Grid.ColumnSpan="7" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Text="{Binding}" />
+
+        <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Number of FTDI devices :</Label>
+        <TextBlock Grid.Row="4" Grid.Column="2" Name="NumberOfDevices" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Text="{Binding Path=NumberOfFTDIDevices}" />
+
+        <Border Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">Info :</Label>
+        <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Name="FindDevices1" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Text="{Binding Path=CubeInfo}" />
+
+        <Border Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">Capacity :</Label>
+        <TextBox Grid.Row="4" Grid.Column="4" Name="CapacityInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=Capacity}" />
+
+        <Border Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Absorbertemperature :</Label>
+        <Label Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in °C ]</Label>
+        <TextBox Grid.Row="6" Grid.Column="2" Name="AbsorbertemperaturInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=Absorbertemperatur}" />
+
+        <Border Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Power :</Label>
+        <Label Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in W ]</Label>
+        <TextBox Grid.Row="7" Grid.Column="2" Name="PowerInfo" VerticalAlignment="Center" HorizontalAlignment="Center"
+                 Text="{Binding Path=Power}" />
+
+        <Border Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="5" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">Irradiation Time :</Label>
+        <TextBox Grid.Row="5" Grid.Column="4" Name="IrradiationTimeInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=IrradiationTime}" />
+
+        <Border Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">BatteryInfo :</Label>
+        <Label Grid.Row="8" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in % ]</Label>
+        <TextBox Grid.Row="8" Grid.Column="2" Name="BatteryInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=Battery}" />
+
+        <Border Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="6" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">On Time :</Label>
+        <Label Grid.Row="6" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in ms ]</Label>
+        <TextBox Grid.Row="6" Grid.Column="4" Name="OnTimeInfo" VerticalAlignment="Center" HorizontalAlignment="Center"
+                 Text="{Binding Path=OnTime}" />
+
+        <Border Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="7" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">Off Time :</Label>
+        <Label Grid.Row="7" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in ms ]</Label>
+        <TextBox Grid.Row="7" Grid.Column="4" Name="OffTimeInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=OffTime}" />
+
+        <Border Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="8" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">Burst Time :</Label>
+        <Label Grid.Row="8" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in ms ]</Label>
+        <TextBox Grid.Row="8" Grid.Column="4" Name="BurstTimeInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=BurstTime}" />
+
+        <Border Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Average Power :</Label>
+        <Label Grid.Row="9" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in W ]</Label>
+        <TextBox Name="AveragePowerInfo" Grid.Row="9" Grid.Column="2" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=AveragePower}" />
+
+        <Border Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="9" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">Peak Power :</Label>
+        <Label Grid.Row="9" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in W ]</Label>
+        <TextBox Grid.Row="9" Grid.Column="4" Name="PeakPowerInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=PeakPower}" />
+
+        <Border Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Number Of Pulse :</Label>
+        <TextBox Grid.Row="10" Grid.Column="2" Name="NumberOfPulseInfo" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=NumberOfPulse}" />
+
+        <Border Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" BorderBrush="DarkSeaGreen" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="10" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">Energy :</Label>
+        <Label Grid.Row="10" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in J ]</Label>
+        <TextBox Grid.Row="10" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"
+                 Text="{Binding Path=Energy}" />
+
+        <Border Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center">simulation data store in:</Label>
+        <TextBox Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" Text="{Binding Path=StorePath}" Margin="1,25,1,10" />
+
+        <Border Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="5" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">Info :</Label>
+        <TextBox Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Center"
+                 HorizontalAlignment="Center" MinWidth="60" Text="{Binding Path=SimulationInfo}" />
+
+        <Border Grid.Row="4" Grid.Column="7" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="4" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center">Time between samplings</Label>
+        <Label Grid.Row="4" Grid.Column="7" VerticalAlignment="Bottom" HorizontalAlignment="Center">[ in ms ]</Label>
+        <TextBox Grid.Row="4" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 TextAlignment="Center" Text="{Binding Path=TimeBetweenScan }" />
+
+        <Border Grid.Row="6" Grid.Column="5" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="6" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">Machine :</Label>
+        <TextBox Grid.Row="6" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 Text="{Binding Path=Machine}" />
+
+        <Border Grid.Row="7" Grid.Column="5" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="7" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">Comment :</Label>
+        <TextBox Grid.Row="7" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 Text="{Binding Path=Comment}" />
+
+        <Border Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="5" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center">User :</Label>
+        <TextBox Grid.Row="5" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 Text="{Binding Path=User}" />
+
+        <Border Grid.Row="8" Grid.Column="5" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="8" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center">Raylase Scan card :</Label>
+        <TextBox Grid.Row="8" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 Text="{Binding Path=RaylaseScancard}" />
+
+        <Border Grid.Row="6" Grid.Column="7" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="6" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center">Laser Serial Number :</Label>
+        <TextBox Grid.Row="6" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 Text="{Binding Path=LaserSerialNumber}" />
+
+        <Border Grid.Row="7" Grid.Column="7" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="7" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center">Cube Serial Number :</Label>
+        <TextBox Grid.Row="7" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 Text="{Binding Path=CubeSerialNumber}" />
+
+        <Border Grid.Row="8" Grid.Column="7" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="8" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center">Raylase Scan head :</Label>
+        <TextBox Grid.Row="8" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="60"
+                 Text="{Binding Path=RaylaseScanhead}" />
+
+        <Border Grid.Row="9" Grid.Column="5" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="9" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <!--<TextBox   Grid.Row="9" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text=""></TextBox>-->
+
+        <Border Grid.Row="9" Grid.Column="7" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="9" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <!--<TextBox Grid.Row="9" Grid.Column="8"  VerticalAlignment="Center" HorizontalAlignment="Center" Text=""></TextBox>-->
+
+        <Border Grid.Row="10" Grid.Column="5" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+        <Label Grid.Row="10" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+               Content="{Binding Path=Dll}" />
+        <!--<TextBox  Grid.Row="10" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text=""></TextBox>-->
+
+        <Border Grid.Row="10" Grid.Column="7" Grid.ColumnSpan="2" BorderBrush="DarkCyan" BorderThickness="2"
+                CornerRadius="5" />
+
+    </Grid>
+
+</Window>
